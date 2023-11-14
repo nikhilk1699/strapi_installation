@@ -67,6 +67,11 @@ $ NODE_ENV=production npm run build
 ```
 ![image](https://github.com/nikhilk1699/strapi_installation/assets/109533285/e16eb32d-1c6b-4590-ad56-60d56573c2b9)
 
+```
+$ node /home/ubuntu/strapi-pro/node_modules/.bin/strapi start
+```
+![image](https://github.com/nikhilk1699/strapi_installation/assets/109533285/817bc9f3-7e6d-4d72-9689-12d31e6455f0)
+
 
  
 
