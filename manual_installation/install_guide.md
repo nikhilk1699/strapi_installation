@@ -5,6 +5,9 @@ $ curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -
 $ sudo apt install nodejs -y
 ```
 ![node -v](https://github.com/nikhilk1699/strapi_installation/assets/109533285/ca8150bd-2825-4506-bd42-d8f26cdf4710)
+### copy the public ip into browser
+![Uploading image.png…]()
+
 
 ```
 sudo apt install postgresql postgresql-contrib
