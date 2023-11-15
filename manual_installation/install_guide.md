@@ -1,8 +1,4 @@
-
-
-
-.
-0..05## Strapi manual installation
+## Strapi manual installation
 ```
 $ sudo apt update
 $ curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -
