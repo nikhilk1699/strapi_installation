@@ -1,4 +1,8 @@
-## Strapi manual installation
+
+
+
+.
+0..05## Strapi manual installation
 ```
 $ sudo apt update
 $ curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -
@@ -81,13 +85,13 @@ $ NODE_ENV=production npm run build
 ```
 $ node /home/ubuntu/strapi-pro/node_modules/.bin/strapi start
 ```
+- Started the Strapi server with the command node /home/ubuntu/strapi-pro/node_modules/.bin/strapi start.
 ![image](https://github.com/nikhilk1699/strapi_installation/assets/109533285/817bc9f3-7e6d-4d72-9689-12d31e6455f0)
 
 ![image](https://github.com/nikhilk1699/strapi_installation/assets/109533285/bbe704fb-868b-4049-9e9d-9adb7110c2c5)
 
-- Started the Strapi server with the command node /home/ubuntu/strapi-pro/node_modules/.bin/strapi start.
 
-![image](https://github.com/nikhilk1699/strapi_installation/assets/109533285/a6c910e5-132d-4110-a682-b8b1ce917186)
+
 
 
 
