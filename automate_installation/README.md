@@ -226,3 +226,92 @@ pi_interface,
 - Executes a local command after the VM is provisioned, appending the VM's public IP address to a local file (local.txt).
 - Configures the SSH connection to the VM using the specified private key.
 
+## strapi script.sh
+```
+#!/bin/bash
+
+show_message() {
+  echo "-------------------------------------------------------------"
+  echo "$1"
+  echo "-------------------------------------------------------------"
+}
+
+show_message "Update system packages"
+sudo apt update
+
+show_message "Install Node.js and npm"
+curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+sudo apt install nodejs -y
+
+show_message "Update system again"
+sudo apt update
+
+show_message "Install PostgreSQL"
+sudo apt install postgresql postgresql-contrib -y
+sudo systemctl start postgresql.service
+
+show_message "Install Nginx"
+sudo apt install nginx -y
+sudo ufw allow 'Nginx HTTP'
+sudo systemctl start nginx
+
+show_message "Update Nginx site configuration"
+
+url=$(curl -s ifconfig.me)
+
+sudo tee /etc/nginx/sites-available/$url <<EOL
+server {
+    listen 80;
+    listen [::]:80;
+
+    server_name $url www.$url;
+
+    location / {
+        proxy_pass http://localhost:1337;
+        include proxy_params;
+    }
+}
+EOL
+
+sudo ln -s /etc/nginx/sites-available/$url /etc/nginx/sites-enabled/
+sudo nginx -t
+sudo systemctl restart nginx
+
+show_message "Configure PostgreSQL"
+
+sudo -i  -u postgres createdb strapi
+sudo -i -u postgres createuser nikhil
+sudo -i -u postgres psql -c "ALTER USER nikhil PASSWORD 'admin';"
+sudo -i -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE strapi TO nikhil;"
+
+show_message "Create Strapi app"
+
+yes | npx create-strapi-app@latest my-project \
+  --dbclient=postgres \
+  --dbhost=127.0.0.1 \
+  --dbname=strapi \
+  --dbusername=nikhil \
+  --dbpassword=admin \
+  --dbport=5432
+
+cd my-project
+NODE_ENV=production npm run build
+nohup node /home/linuxusr/my-project/node_modules/.bin/strapi start > /dev/null 2>&1 &
+show_message "Strapi app has been started"
+
+```
+- updates the package lists for upgrades and new package installations.
+- install Node.js and npm. The first line uses curl to download and execute a script from NodeSource that adds the Node.js 18.x repository, and the second line installs Node.js.
+- install PostgreSQL and start its service.
+- install Nginx, allow HTTP traffic through the firewall, and start the Nginx service.
+- Retrieves the public IP address using curl ifconfig.me.
+- Creates an Nginx server block configuration file for the obtained IP address. Links the configuration file to the sites-enabled directory.
+- Tests the Nginx configuration and restarts Nginx.
+- Creates a PostgreSQL database named "strapi."
+- Creates a PostgreSQL user named "nikhil" with the password "admin."
+- Grants all privileges on the "strapi" database to the "nikhil" user.
+- Uses npx create-strapi-app to generate a new Strapi project called "my-project."
+- Configures the Strapi app to use PostgreSQL with the specified credentials.
+- Changes into the "my-project" directory.
+- Builds the Strapi app for production using npm run build.
+- Starts the Strapi app in the background using nohup and redirects output to /dev/null.
