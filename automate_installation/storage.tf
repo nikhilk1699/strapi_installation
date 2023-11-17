@@ -11,11 +11,5 @@ resource "azurerm_storage_container" "strapi_container" {
   container_access_type = "private"
 }
 
-resource "azurerm_storage_blob" "strapis_bob" {
-  name                   = "files"
-  storage_account_name   = azurerm_storage_account.strapi_storage.name
-  storage_container_name = azurerm_storage_container.strapi_container.name
-  type                   = "Block"
-  source                 = "terraform.tfstate" 
-}
+
 
