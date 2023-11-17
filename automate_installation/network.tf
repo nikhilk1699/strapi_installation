@@ -62,8 +62,6 @@ resource "azurerm_network_security_group" "strapi_nsg" {
 resource "azurerm_subnet_network_security_group_association" "strapi_nsga" {
   subnet_id                 = azurerm_subnet.SubnetA.id
   network_security_group_id = azurerm_network_security_group.strapi_nsg.id
-  depends_on = [
-    azurerm_network_security_group.strapi_nsg]
 }
 
 
