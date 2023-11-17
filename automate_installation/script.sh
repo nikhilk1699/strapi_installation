@@ -66,5 +66,5 @@ yes | npx create-strapi-app@latest my-project \
 
 cd my-project
 NODE_ENV=production npm run build
-nohup node /home/linuxusr/my-project/node_modules/.bin/strapi start &
+nohup /usr/bin/node /home/linuxusr/my-project/node_modules/.bin/strapi start > /var/log/strapi.log 2>&1 &
 show_message "Strapi app has been started"
