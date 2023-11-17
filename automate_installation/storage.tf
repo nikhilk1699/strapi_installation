@@ -14,7 +14,7 @@ resource "azurerm_storage_container" "strapi_container" {
 }
 
 resource "azurerm_storage_blob" "strapis_bob" {
-  name                   = "my-awesome-content.zip"
+  name                   = "files"
   storage_account_name   = azurerm_storage_account.strapi_storage.name
   storage_container_name = azurerm_storage_container.strapi_container.name
   type                   = "Block"
