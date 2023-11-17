@@ -45,21 +45,11 @@ resource "azurerm_storage_container" "strapi_container" {
   depends_on = [ azurerm_storage_account.strapi_storage ]
 }
 
-resource "azurerm_storage_blob" "strapis_bob" {
-  name                   = "files"
-  storage_account_name   = azurerm_storage_account.strapi_storage.name
-  storage_container_name = azurerm_storage_container.strapi_container.name
-  type                   = "Block"
-  source                 = "terraform.tfstate"
-  depends_on = [ azurerm_storage_container.strapi_container ]
-}
 ```
 - Azure Storage Account named "pstroage" in the specified Azure Resource Group (nstrapi_rg).
 - It's set to use the "Standard" storage tier with Locally Redundant Storage (LRS) replication for redundancy.
 - Azure Storage Container named "secretfile" within the previously defined Storage Account. The access type is set to "private," meaning only authorized users can access the container.
-- depends_on attribute ensures that the Storage Account is created before creating the Storage Container.
-- This block defines an Azure Storage Blob named "terraform.tfstate" within the specified Storage Container. It's set as a block type blob.
-- The depends_on attribute ensures that the Storage Container is created before creating the Storage Blob. 
+
 
 ## network.tf
 ```
