@@ -48,7 +48,7 @@ resource "azurerm_storage_container" "strapi_container" {
 - It's set to use the "Standard" storage tier with Locally Redundant Storage (LRS) replication for redundancy.
 - Azure Storage Container named "secretfile" within the previously defined Storage Account. The access type is set to "private," meaning only authorized users can access the container.
 
-backend.tf
+## backend.tf
 ```
 terraform {
   backend "azurerm" {
@@ -331,6 +331,8 @@ show_message "Strapi app has been started"
 ![Screenshot 2023-11-17 192404](https://github.com/nikhilk1699/strapi_installation/assets/109533285/4c81d86d-fb4a-4f98-9878-2b41f0e368fe)
 ![Screenshot 2023-11-17 192505](https://github.com/nikhilk1699/strapi_installation/assets/109533285/30f11027-4762-42cd-815b-bace138f628c)
 ![Screenshot 2023-11-17 192726](https://github.com/nikhilk1699/strapi_installation/assets/109533285/b269f4e4-dc22-41da-b4fb-aa0ef20d84d4)
+![Screenshot 2023-11-18 112634](https://github.com/nikhilk1699/strapi_installation/assets/109533285/588e7ab7-40e2-494e-a471-c22235ee8397)
+
 
 
 
