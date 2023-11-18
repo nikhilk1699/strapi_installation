@@ -331,6 +331,8 @@ show_message "Strapi app has been started"
 ![Screenshot 2023-11-17 192404](https://github.com/nikhilk1699/strapi_installation/assets/109533285/4c81d86d-fb4a-4f98-9878-2b41f0e368fe)
 ![Screenshot 2023-11-17 192505](https://github.com/nikhilk1699/strapi_installation/assets/109533285/30f11027-4762-42cd-815b-bace138f628c)
 ![Screenshot 2023-11-17 192726](https://github.com/nikhilk1699/strapi_installation/assets/109533285/b269f4e4-dc22-41da-b4fb-aa0ef20d84d4)
+![Screenshot 2023-11-18 112634](https://github.com/nikhilk1699/strapi_installation/assets/109533285/aee0dd37-f7f9-4a89-98f4-b20f2e91429d)
+
 
 
 
