@@ -31,7 +31,7 @@ resource "azurerm_resource_group" "nstrapi_rg" {
 ## storage.tf
 ```
 resource "azurerm_storage_account" "strapi_storage" {
-  name                     = "pstroage"
+  name                     = "strapistroage"
   resource_group_name      = azurerm_resource_group.nstrapi_rg.name
   location                 = azurerm_resource_group.nstrapi_rg.location
   account_tier             = "Standard"
@@ -42,13 +42,33 @@ resource "azurerm_storage_container" "strapi_container" {
   name                  = "secretfile"
   storage_account_name  = azurerm_storage_account.strapi_storage.name
   container_access_type = "private"
-  depends_on = [ azurerm_storage_account.strapi_storage ]
 }
-
 ```
 - Azure Storage Account named "pstroage" in the specified Azure Resource Group (nstrapi_rg).
 - It's set to use the "Standard" storage tier with Locally Redundant Storage (LRS) replication for redundancy.
 - Azure Storage Container named "secretfile" within the previously defined Storage Account. The access type is set to "private," meaning only authorized users can access the container.
+
+backend.tf
+```
+terraform {
+  backend "azurerm" {
+    resource_group_name = "nstrapi-rg"
+    storage_account_name = "strapistroage"
+    container_name = "secretfile"
+    key = "terraform.tfstate"
+  }
+}
+```
+- backend: This specifies the type of backend to use for storing Terraform state. In this case, it's set to "azurerm," indicating the Azure Resource Manager backend.
+
+- resource_group_name: Specifies the name of the Azure Resource Group where the storage account is located or where it should be created. In this case, it's set to "nstrapi-rg."
+
+- storage_account_name: Specifies the name of the Azure Storage Account where the Terraform state file will be stored. In this case, it's set to "strapistroage."
+
+- container_name: Specifies the name of the container within the specified Azure Storage Account. In this case, the container is named "secretfile."
+
+- key: Specifies the name of the Terraform state file within the specified container. The state file is named "terraform.tfstate."
+
 
 
 ## network.tf
