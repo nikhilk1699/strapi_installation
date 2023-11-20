@@ -306,7 +306,7 @@ yes | npx create-strapi-app@latest my-project \
 
 cd my-project
 NODE_ENV=production npm run build
-nohup node /home/linuxusr/my-project/node_modules/.bin/strapi start > /dev/null 2>&1 &
+node /home/linuxusr/my-project/node_modules/.bin/strapi start > /home/linuxusr/strapi.log &
 show_message "Strapi app has been started"
 
 ```
@@ -324,7 +324,7 @@ show_message "Strapi app has been started"
 - Configures the Strapi app to use PostgreSQL with the specified credentials.
 - Changes into the "my-project" directory.
 - Builds the Strapi app for production using npm run build.
-- Starts the Strapi app in the background using nohup and redirects output to /dev/null.
+- Starts the Strapi app in the background using &.
 
 ![image](https://github.com/nikhilk1699/strapi_installation/assets/109533285/8d5b38a4-eee1-4500-9fc2-d9761afcfbcc)
 ![Screenshot 2023-11-17 192404](https://github.com/nikhilk1699/strapi_installation/assets/109533285/36f4c2f5-dc9d-4b0c-882f-470dbed9d2dc)
