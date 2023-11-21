@@ -4,9 +4,11 @@ on:
   push:
     branches:
       - main
-  pull_request:
+  
   workflow_dispatch:
   
+permissions:
+  contents: read
 
 env:
   ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID_NK }}
