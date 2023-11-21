@@ -252,7 +252,6 @@ sudo apt update
 show_message "Install Node.js and npm"
 curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -
 sudo apt install nodejs -y
-
 show_message "Update system again"
 sudo apt update
 
@@ -266,18 +265,14 @@ sudo ufw allow 'Nginx HTTP'
 sudo systemctl start nginx
 
 show_message "Update Nginx site configuration"
-
 url=$(curl -s ifconfig.me)
-
 sudo tee /etc/nginx/sites-available/$url <<EOL
 server {
     listen 80;
     listen [::]:80;
-
     server_name $url www.$url;
-
     location / {
-        proxy_pass http://localhost:1337;
+        proxy_pass http://127.0.0.1:1337;
         include proxy_params;
     }
 }
@@ -288,14 +283,13 @@ sudo nginx -t
 sudo systemctl restart nginx
 
 show_message "Configure PostgreSQL"
-
-sudo -i  -u postgres createdb strapi
+sudo -i -u postgres createdb strapi
 sudo -i -u postgres createuser nikhil
 sudo -i -u postgres psql -c "ALTER USER nikhil PASSWORD 'admin';"
 sudo -i -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE strapi TO nikhil;"
 
 show_message "Create Strapi app"
-
+cd /home/linuxusr
 yes | npx create-strapi-app@latest my-project \
   --dbclient=postgres \
   --dbhost=127.0.0.1 \
@@ -304,11 +298,19 @@ yes | npx create-strapi-app@latest my-project \
   --dbpassword=admin \
   --dbport=5432
 
-cd my-project
-NODE_ENV=production npm run build
-node /home/linuxusr/my-project/node_modules/.bin/strapi start > /home/linuxusr/strapi.log &
-show_message "Strapi app has been started"
+cd /home/linuxusr/my-project
+sudo npm install -g pm2
 
+sudo tee server.js <<EOL
+ const strapi = require('@strapi/strapi');
+ strapi().start();
+EOL
+
+pm2 start --name strapi server.js 
+pm2 save
+pm2 startup
+
+show_message "Strapi app has been started"
 ```
 - updates the package lists for upgrades and new package installations.
 - install Node.js and npm. The first line uses curl to download and execute a script from NodeSource that adds the Node.js 18.x repository, and the second line installs Node.js.
@@ -323,8 +325,11 @@ show_message "Strapi app has been started"
 - Uses npx create-strapi-app to generate a new Strapi project called "my-project."
 - Configures the Strapi app to use PostgreSQL with the specified credentials.
 - Changes into the "my-project" directory.
-- Builds the Strapi app for production using npm run build.
-- Starts the Strapi app in the background using &.
+- The script changes the directory to /home/linuxusr and uses npx to create a new Strapi app named 'my-project'.
+- The app is configured to use PostgreSQL as the database, with the provided connection details.
+- PM2 is installed globally with sudo npm install -g pm2.
+- A basic server.js file is created, which starts the Strapi app.
+- PM2 is used to start the Strapi app, save the process list, and set up startup scripts.
 
 ![image](https://github.com/nikhilk1699/strapi_installation/assets/109533285/8d5b38a4-eee1-4500-9fc2-d9761afcfbcc)
 ![Screenshot 2023-11-17 192404](https://github.com/nikhilk1699/strapi_installation/assets/109533285/36f4c2f5-dc9d-4b0c-882f-470dbed9d2dc)
