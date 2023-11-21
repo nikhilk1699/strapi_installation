@@ -12,7 +12,6 @@ sudo apt update
 show_message "Install Node.js and npm"
 curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -
 sudo apt install nodejs -y
-
 show_message "Update system again"
 sudo apt update
 
@@ -26,18 +25,14 @@ sudo ufw allow 'Nginx HTTP'
 sudo systemctl start nginx
 
 show_message "Update Nginx site configuration"
-
 url=$(curl -s ifconfig.me)
-
 sudo tee /etc/nginx/sites-available/$url <<EOL
 server {
     listen 80;
     listen [::]:80;
-
     server_name $url www.$url;
-
     location / {
-        proxy_pass http://localhost:1337;
+        proxy_pass http://127.0.0.1:1337;
         include proxy_params;
     }
 }
@@ -48,23 +43,31 @@ sudo nginx -t
 sudo systemctl restart nginx
 
 show_message "Configure PostgreSQL"
-
-sudo -i  -u postgres createdb strapi-db
+sudo -i -u postgres createdb strapi
 sudo -i -u postgres createuser nikhil
 sudo -i -u postgres psql -c "ALTER USER nikhil PASSWORD 'admin';"
-sudo -i -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE strapi-db TO nikhil;"
+sudo -i -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE strapi TO nikhil;"
 
 show_message "Create Strapi app"
-
+cd /home/linuxusr
 yes | npx create-strapi-app@latest my-project \
   --dbclient=postgres \
   --dbhost=127.0.0.1 \
-  --dbname=strapi-db \
+  --dbname=strapi \
   --dbusername=nikhil \
   --dbpassword=admin \
   --dbport=5432
 
-cd my-project
-NODE_ENV=production npm run build
-nohup /usr/bin/node /home/linuxusr/my-project/node_modules/.bin/strapi start > /home/linuxusr/strapi.log 2>&1 &
+cd /home/linuxusr/my-project
+sudo npm install -g pm2
+
+sudo tee server.js <<EOL
+ const strapi = require('@strapi/strapi');
+ strapi().start();
+EOL
+
+pm2 start --name strapi server.js 
+pm2 save
+pm2 startup
+
 show_message "Strapi app has been started"
