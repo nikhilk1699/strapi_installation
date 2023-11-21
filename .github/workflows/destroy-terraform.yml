@@ -2,8 +2,7 @@ name: Destroy Terraform
 
 on:
   workflow_dispatch:
-permissions:
-  contents: read
+
 
 env:
   ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID_NK }}
@@ -34,10 +33,10 @@ jobs:
 
       - name: Terraform Init
         run: |
-          terraform init -lock=false -input=false
+          terraform init 
         working-directory: ${{ env.ROOT_PATH }}
 
       - name: Terraform destroy
         run: |
-          terraform destroy -auto-approve
+          terraform destroy -auto-approve -input=false
         working-directory: ${{ env.ROOT_PATH }}
