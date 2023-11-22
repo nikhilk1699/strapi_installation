@@ -15,12 +15,13 @@ env:
   ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET_NK }}
   ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID_NK }}
   ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID_NK }}
-  ROOT_PATH: '${{github.workspace}}/automate_installation'
+  ROOT_PATH: '${{ github.workspace }}/automate_installation'
 
-# Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest
+# Use the Bash shell regardless of whether the GitHub Actions runner is ubuntu-latest
 defaults:
   run:
     shell: bash
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -28,6 +29,7 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v2  
+      
       - name: Install unzip
         run: |
           sudo apt-get update
@@ -42,16 +44,18 @@ jobs:
         
       - name: Terraform Init
         run: |
-          terraform init  -input=false
-        working-directory: ${{env.ROOT_PATH}}
-      - name: Terraform plan
+          terraform init -input=false
+        working-directory: ${{ env.ROOT_PATH }}
+      
+      - name: Terraform Plan
         run: |
           terraform plan -input=false
-        working-directory: ${{env.ROOT_PATH}}
-      - name: Terraform apply
+        working-directory: ${{ env.ROOT_PATH }}
+      
+      - name: Terraform Apply
         run: |
           terraform apply -auto-approve -input=false
-        working-directory: ${{env.ROOT_PATH}}
+        working-directory: ${{ env.ROOT_PATH }}
 
       - name: Show Terraform State
         run: |
@@ -61,21 +65,18 @@ jobs:
       - name: Setup Terraform Backend
         run: |
           cat > backend.tf << EOF
-            terraform {
-              backend "azurerm" {
-                  resource_group_name = "nstrapi-rg"
-                  storage_account_name = "strapistroage"
-                  container_name = "secretfile"
-                  key = "terraform.tfstate"
-                 }
-              }
-              EOF
+          terraform {
+            backend "azurerm" {
+              resource_group_name = "nstrapi-rg"
+              storage_account_name  = "strapistroage"
+              container_name       = "secretfile"
+              key                  = "terraform.tfstate"
+            }
+          }
+          EOF
         working-directory: ${{ env.ROOT_PATH }} 
 
-      - name: Terraform Init reconfigure
+      - name: Terraform Init Reconfigure
         run: |
-          terraform init reconfigure -input=false
-        working-directory: ${{env.ROOT_PATH}}
-   
-    
-  
+          terraform init -reconfigure -input=false
+        working-directory: ${{ env.ROOT_PATH }}
