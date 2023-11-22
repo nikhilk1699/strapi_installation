@@ -1,4 +1,4 @@
-name: Strapi GitHub Action
+name: terraform apply
 
 on:
   push:
@@ -74,7 +74,7 @@ jobs:
 
       - name: Terraform Init reconfigure
         run: |
-          terraform init  -input=false
+          terraform init reconfigure -input=false
         working-directory: ${{env.ROOT_PATH}}
    
     
