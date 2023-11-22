@@ -64,8 +64,10 @@ jobs:
 
       - name: Copy Terraform State
         run: |
-          cp ${{ env.ROOT_PATH }}/terraform.tfstate ${{ github.workspace }}/automate_installation/
-          chmod 644 ${{ github.workspace }}/automate_installation/terraform.tfstate
+           chmod 755 ${{ github.workspace }}/automate_installation
+           cp terraform.tfstate ${{ github.workspace }}/automate_installation/
+          
+          
         working-directory: ${{ env.ROOT_PATH }}
 
       - name: Setup Terraform Backend
@@ -81,7 +83,7 @@ jobs:
           }
           EOF
           # Set write permissions for the file
-          chmod +w backend.tf
+          chmod 755 backend.tf
           # Copy backend.tf to the desired directory
           cp backend.tf ${{ github.workspace }}/automate_installation/
         working-directory: ${{ env.ROOT_PATH }} 
