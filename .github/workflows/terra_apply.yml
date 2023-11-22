@@ -29,12 +29,7 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v2  
-      
-      - name: Install unzip
-        run: |
-          sudo apt-get update
-          sudo apt-get install unzip
-
+    
       - name: setup Terraform
         run: |
           wget -O- https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
@@ -62,12 +57,11 @@ jobs:
           cat ${{ env.ROOT_PATH }}/terraform.tfstate
         working-directory: ${{ env.ROOT_PATH }}
 
-      - name: Copy Terraform State
+      - name: permission Terraform State
         run: |
-           chmod 755 ${{ github.workspace }}/automate_installation
-           cp terraform.tfstate ${{ github.workspace }}/automate_installation/
-          
-          
+           chmod 777 ${{ github.workspace }}/automate_installation
+           chmod 777 ${{ github.workspace }}/automate_installation/terraform.tfstate
+           
         working-directory: ${{ env.ROOT_PATH }}
 
       - name: Setup Terraform Backend
@@ -84,8 +78,6 @@ jobs:
           EOF
           # Set write permissions for the file
           chmod 755 backend.tf
-          # Copy backend.tf to the desired directory
-          cp backend.tf ${{ github.workspace }}/automate_installation/
         working-directory: ${{ env.ROOT_PATH }} 
 
       - name: Terraform Init Reconfigure
