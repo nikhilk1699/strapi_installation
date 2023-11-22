@@ -68,9 +68,10 @@ jobs:
         working-directory: ${{ env.ROOT_PATH }}
 
   reconfigure:
-    needs: build
+    needs : build
     runs-on: ubuntu-latest
     if: github.event_name == 'workflow_dispatch' && env.FILE == 'backend.tf'
+
 
     steps:
       - name: Check out code
