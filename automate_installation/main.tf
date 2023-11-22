@@ -12,6 +12,6 @@ provider "azurerm" {
 
 resource "azurerm_resource_group" "nstrapi_rg" {
     name = "nstrapi-rg"
-    location = "North Europe"
+    location = " East US"
 }
 
