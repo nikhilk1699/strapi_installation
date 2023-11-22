@@ -44,7 +44,7 @@ jobs:
         
       - name: Terraform Init
         run: |
-          terraform init -input=false
+          terraform init 
         working-directory: ${{ env.ROOT_PATH }}
       
       - name: Terraform Plan
@@ -75,12 +75,7 @@ jobs:
           }
           EOF
         working-directory: ${{ env.ROOT_PATH }} 
-        
-      - name: Move Terraform State to Root
-        run: |
-          cp ${{ env.ROOT_PATH }}/backend.tf ./backend.tf
-          working-directory: ${{ env.ROOT_PATH }}
-  
+      
       - name: Terraform Init Reconfigure
         run: |
           echo "yes" | terraform init -reconfigure 
