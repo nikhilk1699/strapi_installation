@@ -31,7 +31,7 @@ jobs:
         
       - name: Terraform Init - Reconfigure
         run: |
-          terraform init -reconfigure
+          terraform init -reconfigure -input=false
         working-directory: ${{env.ROOT_PATH}}
 
 
