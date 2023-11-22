@@ -6,6 +6,11 @@ on:
       - main
 
   workflow_dispatch:
+    inputs:
+      file:
+        description: 'Path to the changed file'
+        required: false
+        default: 'backend.tf'
 
 permissions:
   contents: read
@@ -65,16 +70,11 @@ jobs:
   reconfigure:
     needs: build
     runs-on: ubuntu-latest
-    if: github.event_name == 'push' && contains(github.event.head_commit.modified, 'backend.tf')
+    if: github.event_name == 'workflow_dispatch' && env.FILE == 'backend.tf'
 
     steps:
       - name: Check out code
         uses: actions/checkout@v2
-
-      - name: Install unzip
-        run: |
-          sudo apt-get update
-          sudo apt-get install unzip
 
       - name: setup Terraform
         run: |
