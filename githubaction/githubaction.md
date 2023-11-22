@@ -1,6 +1,6 @@
 # strapi GitHub Actions workflow 
 ### create file .github/workflows/az_tga.yml
-##### terraform code and strapi script available in following path: https://github.com/PearlThoughtsInternship/snipe-it.git  /strapin/
+##### terraform code and strapi script available in following path: https://github.com/PearlThoughtsInternship/snipe-it/tree/nikhil-kadam/strapin
 ```
 name: terraform apply
 
