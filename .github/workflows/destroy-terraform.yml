@@ -18,12 +18,6 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v2
-
-      - name: Install unzip
-        run: |
-          sudo apt-get update
-          sudo apt-get install unzip
-
       - name: setup Terraform
         run: |
           wget -O- https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
@@ -34,6 +28,10 @@ jobs:
       - name: Terraform Init
         run: |
           terraform init 
+        working-directory: ${{ env.ROOT_PATH }}
+      - name: Show Terraform State
+        run: |
+          cat ${{ env.ROOT_PATH }}/terraform.tfstate
         working-directory: ${{ env.ROOT_PATH }}
 
       - name: Terraform destroy
