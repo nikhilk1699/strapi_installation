@@ -122,13 +122,21 @@ tar xzf ./actions-runner-linux-x64-2.311.0.tar.gz
 # check the following screenshots:
 
 ![actionsecrit](https://github.com/nikhilk1699/strapi_installation/assets/109533285/bff2a19b-a70f-47a7-a3c5-75ac3be2214c)
+
 ![image](https://github.com/nikhilk1699/strapi_installation/assets/109533285/b36c3121-0a96-402a-8cfe-1120ae2f0649)
-![image](https://github.com/nikhilk1699/strapi_installation/assets/109533285/bfb86c56-d226-45c1-85f2-3a1ac7c1f874)
+
 ![mans](https://github.com/nikhilk1699/strapi_installation/assets/109533285/2baa1884-f78b-46f1-97b7-a33bc3602db0)
+
 ![mms](https://github.com/nikhilk1699/strapi_installation/assets/109533285/6bdd46e2-94b0-4348-ac21-4ad8ceac42e8)
+
 ![re](https://github.com/nikhilk1699/strapi_installation/assets/109533285/0c7436fb-5098-4054-bb47-2840b0db7ee5)
+
 ![build scc](https://github.com/nikhilk1699/strapi_installation/assets/109533285/4fa63b07-a72c-42de-aaef-e1763d8e009e)
+
+![image](https://github.com/nikhilk1699/strapi_installation/assets/109533285/bfb86c56-d226-45c1-85f2-3a1ac7c1f874)
+
 ![mmms](https://github.com/nikhilk1699/strapi_installation/assets/109533285/7333ce20-deb7-4669-a9ca-6e118f4a2704)
+
 ![image](https://github.com/nikhilk1699/strapi_installation/assets/109533285/37de8f50-3fd1-461c-b231-680a84bf7a64)
 
 
