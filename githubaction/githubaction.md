@@ -1,6 +1,6 @@
 # GitHub Actions workflow 
 ### create file .github/workflows/az_tga.yml
-### terraform code and strapi script available in following path: https://github.com/PearlThoughtsInternship/snipe-it.git  /strapin/
+##### terraform code and strapi script available in following path: https://github.com/PearlThoughtsInternship/snipe-it.git  /strapin/
 ```
 name: terraform apply
 
@@ -107,6 +107,7 @@ jobs:
 - Re-initializes Terraform with reconfiguration, automatically approving changes.
 
 ## create self-hosted runner
+### It's designed to be run in a self-hosted environment, likely to have more control over the runner and the infrastructure it interacts with.
 - following steps to create self-hosted runner
 - step1: create vm on azure portal and login using ssh
 - step2: when successfully login run following command into your vm:
