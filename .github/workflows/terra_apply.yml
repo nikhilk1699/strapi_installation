@@ -62,11 +62,28 @@ jobs:
           cat ${{ env.ROOT_PATH }}/terraform.tfstate
         working-directory: ${{ env.ROOT_PATH }}
 
+  reconfigure:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && contains(github.event.head_commit.modified, 'backend.tf')
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Install unzip
+        run: |
+          sudo apt-get update
+          sudo apt-get install unzip
+
+      - name: setup Terraform
+        run: |
+          wget -O- https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+          echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+          sudo apt-get update
+          sudo apt install terraform -y
+
       - name: Terraform Init Reconfigure
         run: |
-          if [[ "$(git diff --name-only ${{ github.event.before }}..HEAD)" == *"backend.tf"* ]]; then
-            echo "yes" | terraform init -reconfigure
-          else
-            echo "No changes to backend.tf. Skipping Terraform Init Reconfigure."
-          fi
+          echo "yes" | terraform init -reconfigure
         working-directory: ${{ env.ROOT_PATH }}
