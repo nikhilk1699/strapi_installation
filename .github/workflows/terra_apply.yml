@@ -75,8 +75,8 @@ jobs:
           }
           EOF
         working-directory: ${{ env.ROOT_PATH }} 
-
+        
       - name: Terraform Init Reconfigure
         run: |
-          terraform init -reconfigure -input=false
+          terraform init -reconfigure 
         working-directory: ${{ env.ROOT_PATH }}
