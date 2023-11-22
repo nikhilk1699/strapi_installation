@@ -52,6 +52,11 @@ jobs:
         run: |
           terraform apply -auto-approve -input=false
         working-directory: ${{env.ROOT_PATH}}
+
+      - name: Show Terraform State
+        run: |
+          cat ${{ env.ROOT_PATH }}/terraform.tfstate
+        working-directory: ${{ env.ROOT_PATH }} 
   
   
     
